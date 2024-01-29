@@ -1,0 +1,23 @@
+function barycentric = PrNewtonCotesNodes(r)
+% Author: Jet Hoe Tang
+switch r
+    case 1
+        xi = [0,0; 1,0; 0,1];
+    case 2
+        xi = [0,0; 1,0; 0,1; 0.5,0; 0.5,0.5; 0,0.5];
+    otherwise
+        s = (1: 1:r-1)';
+        t = (r-1:-1:1)';
+        o = zeros(r-1,1);
+        u = nchoosek(1 : r-1,2);
+        uv = sortrows([r-u(:,2),u(:,1)],[2,1]);
+        xi = [0,0;...
+              1,0;...
+              0,1;...
+              [s,o]/r;...
+              [t,s]/r;...
+              [o,t]/r;...
+              uv/r;...
+              ];
+end
+barycentric = [1-sum(xi,2),xi];
